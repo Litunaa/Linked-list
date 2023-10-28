@@ -135,14 +135,27 @@ public class LinkedList<T>{
     }
 
     public void pop(){
-        Node<T> current = head;
-        
 
-
-        while (current.next() != null){
-            current = current.next();
+        if (this.head == null){
+            return;
         }
-        current.setNext(null);
+
+        if (this.head.next() == null){
+
+            this.head = null;
+        }
+
+
+        else{
+            Node<T> current = this.head;
+        
+            while (current.next().next() != null){
+                current = current.next();
+            }
+            current.setNext(null);
+        }
+
+        this.length--;
     }
 
     public void add(T data, int index){     // Adds item at specified index
@@ -210,22 +223,63 @@ public class LinkedList<T>{
     }
 
 
+    public T getLast(){
+        if (this.head == null){
+            return null;
+        }
+
+        Node<T> current = this.head;
+
+        while (current.next() != null){
+            current = current.next();
+
+        }
+        return current.val();
+    }
+
+    public T getFirst(){
+        if (this.head == null){
+            return null;
+        }
+
+        return this.head.val();
+    }
+
+
+    public void merge(LinkedList<T> mergeList){
+        if (this.head == null){
+            this.head = mergeList.head;
+            return;
+        }
+
+        if (mergeList.head == null){
+            return;
+        }
+
+        Node<T> current = this.head;
+
+        while (current.next() != null){
+            current = current.next();
+        }
+        current.setNext(mergeList.head);
+    }
+
+    public 
+
 
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
-        list.append(5);
+        list.append(15);
+        list.append(34);
         list.append(2);
-        list.add(2, 2);
-        list.append(4);
-        list.append(4);
-        list.append(4);
-        list.append(9);
-        list.add(7, 0);
 
-        
+
+        LinkedList<Integer> list2 = new LinkedList<Integer>();
+
+
 
         System.out.println(list.toString());
-        list.pop();
+        list.merge(list2);
         System.out.println(list.toString());
         
         
