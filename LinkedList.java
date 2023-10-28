@@ -306,30 +306,38 @@ public class LinkedList<T>{
         LinkedList<T> leftSide = new LinkedList<>();
 
 
-        Node <T> current = this.head;
+        Node<T> slow = this.head;
+        Node<T> fast = this.head;
+        while (fast != null && fast.next() != null){
+            leftSide.add(slow.val(), 0);
+            slow = slow.next();
+            fast = fast.next().next();
+        }
 
+
+        if (fast != null){
+            slow = slow.next();
+        }
+
+
+        Node<T> current = leftSide.head;
+        while (slow != null && current != null){
+            if (!slow.val().equals(current.val())){
+                return false;
+            }
+            current = current.next();
+            slow = slow.next();
+        }
+        return slow == null && current == null;
     }
 
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
-        list.append(15);
-        list.append(34);
+        list.append(2);
+        list.append(1);
         list.append(2);
 
-
-        LinkedList<Integer> list2 = new LinkedList<Integer>();
-
-        list2.append(9);
-        list2.append(2);
-        list2.append(10);
-
-        list.merge(list2);
-
-
-        LinkedList<Integer>[] splitted = list.split(3);
-        System.out.println(splitted[0].toString());
-        System.out.println(splitted[1].toString());
-
+        
         System.out.println(list.isPalindrome());
 
         
