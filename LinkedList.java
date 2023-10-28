@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class LinkedList<T>{
 
     private Node<T> head;
@@ -262,10 +264,51 @@ public class LinkedList<T>{
             current = current.next();
         }
         current.setNext(mergeList.head);
+        this.length += mergeList.length;
     }
 
-    public 
+    public LinkedList<T>[] split(int index){
+        if (index < 0 || index >= this.length ){
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
 
+        LinkedList<T>[] splittedLists =  new LinkedList[2];
+        Node<T> current = this.head;
+        int currIndex = 0;
+
+        LinkedList<T> leftList = new LinkedList<T>();
+        LinkedList<T> rightList = new LinkedList<T>();
+
+        while (currIndex < index){
+            leftList.append(current.val());
+            current = current.next();
+            currIndex++;
+        }
+
+        while (current != null){
+            rightList.append(current.val());
+            current = current.next();
+        }
+
+
+        splittedLists[0] = leftList;
+        splittedLists[1] = rightList;
+
+        return splittedLists;
+    }
+
+    public boolean isPalindrome(){
+        if (head == null || head.next() == null){
+            return true;
+        }
+
+
+        LinkedList<T> leftSide = new LinkedList<>();
+
+
+        Node <T> current = this.head;
+
+    }
 
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
@@ -276,11 +319,19 @@ public class LinkedList<T>{
 
         LinkedList<Integer> list2 = new LinkedList<Integer>();
 
+        list2.append(9);
+        list2.append(2);
+        list2.append(10);
 
-
-        System.out.println(list.toString());
         list.merge(list2);
-        System.out.println(list.toString());
+
+
+        LinkedList<Integer>[] splitted = list.split(3);
+        System.out.println(splitted[0].toString());
+        System.out.println(splitted[1].toString());
+
+        System.out.println(list.isPalindrome());
+
         
         
         
