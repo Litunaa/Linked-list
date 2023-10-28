@@ -5,16 +5,16 @@ public class LinkedList<T>{
 
 
 
-    public LinkedList(){
+    public LinkedList(){ // Constructs default values to each linked list
         this.head = null;
         this.length = 0;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty(){ // Returns wheter the linked list is empty or not 
         return this.head == null;
     }
 
-    public boolean isSorted(){
+    public boolean isSorted(){ // Returns wheter the linke d list is sorted or not
         if (this.head == null){
             return true;
         }
@@ -34,16 +34,16 @@ public class LinkedList<T>{
         return true;
     }
 
-    public int length(){
+    public int length(){ // Returns length of the linked list
         return this.length;
     }
 
-    public void clear(){
+    public void clear(){ // Clears the linked list
         this.head = null;
         this.length = 0; 
     }
 
-    public void append(T data){
+    public void append(T data){ // Appends item to linked list 
         Node<T> newNode = new Node<T>(data, null);
         if (this.head == null){
             this.head = newNode;
@@ -59,7 +59,7 @@ public class LinkedList<T>{
         this.length++;
     }
 
-    public T getValueAt(int index){
+    public T getValueAt(int index){     // Returns value at specified index
         if (index >= length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
@@ -76,7 +76,7 @@ public class LinkedList<T>{
     }
 
 
-    public int IndexOf(T data){
+    public int IndexOf(T data){ // Returns index of first occurence of an item
         Node<T> current = head;
         int currIndex = 0;
         while (current != null){
@@ -89,7 +89,7 @@ public class LinkedList<T>{
         return -1;
     }
 
-    public String IndexOfAll(T data){  // Returns index of all occurences 
+    public String IndexOfAll(T data){  // Returns index of all occurences of an item
         Node<T> current = head;
         StringBuilder indexes = new StringBuilder();
         int currIndex = 0;
@@ -104,7 +104,7 @@ public class LinkedList<T>{
         return indexes.toString();
     }
 
-    public String toString(){
+    public String toString(){ // Returns a string representation of the linked list
         Node<T> current = this.head;
         StringBuilder list = new StringBuilder();
 
@@ -118,7 +118,7 @@ public class LinkedList<T>{
     }
 
 
-    public void remove(T val){
+    public void remove(T val){   // Removes item
         Node<T> current = this.head;
         Node<T> prev = null;
         while (current != null){
@@ -134,7 +134,7 @@ public class LinkedList<T>{
         length--;
     }
 
-    public void add(T data, int index){  
+    public void add(T data, int index){     // Adds item at specified index
         if (index > length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
@@ -163,7 +163,7 @@ public class LinkedList<T>{
         length++;
     }
 
-    public boolean contains(T data){
+    public boolean contains(T data){ // Returns wheter an item is in the linked list or not
         Node<T> current = head;
 
         while (current != null){
@@ -174,7 +174,8 @@ public class LinkedList<T>{
         }
         return false;
     }
-    public void reverse(){
+
+    public void reverse(){ // Reverses linked list
         if (length <= 1){
             return;
         }
