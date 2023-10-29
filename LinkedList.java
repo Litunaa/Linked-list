@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-
 public class LinkedList<T>{
 
     private Node<T> head;
@@ -190,7 +188,7 @@ public class LinkedList<T>{
     }
 
     public void addFirst(T data){
-        add(data, 0);
+        add(0, data);
     }
 
 
@@ -339,10 +337,10 @@ public class LinkedList<T>{
         LinkedList<Integer> list = new LinkedList<Integer>();
         list.append(2);
         list.append(1);
-        list.append(3);
+        list.append(2);
 
         
-        System.out.println(list.isPalindrome());
+        list.addFirst(5);
 
         
         
