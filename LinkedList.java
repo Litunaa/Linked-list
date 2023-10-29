@@ -223,7 +223,7 @@ public class LinkedList<T>{
     }
 
 
-    public T getLast(){
+    public T getLast(){ // Returns the last element of linked list 
         if (this.head == null){
             return null;
         }
@@ -246,7 +246,7 @@ public class LinkedList<T>{
     }
 
 
-    public void merge(LinkedList<T> mergeList){
+    public void merge(LinkedList<T> mergeList){ // Merges a linked list with another linked list
         if (this.head == null){
             this.head = mergeList.head;
             return;
@@ -265,7 +265,7 @@ public class LinkedList<T>{
         this.length += mergeList.length;
     }
 
-    public LinkedList<T>[] split(int index){
+    public LinkedList<T>[] split(int index){  // Splits a linked list at a given index into two seperate linked lists and returns a list of the splitted linked lists
         if (index < 0 || index >= this.length ){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
@@ -295,7 +295,7 @@ public class LinkedList<T>{
         return splittedLists;
     }
 
-    public boolean isPalindrome(){
+    public boolean isPalindrome(){ // Returns wheter a linked list is a paildrome or not
         if (head == null || head.next() == null){
             return true;
         }
