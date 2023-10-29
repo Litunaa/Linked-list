@@ -160,7 +160,7 @@ public class LinkedList<T>{
         this.length--;
     }
 
-    public void add(T data, int index){     // Adds item at specified index
+    public void add(int index, T data){     // Adds item at specified index
         if (index > length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
@@ -302,40 +302,44 @@ public class LinkedList<T>{
             return true;
         }
 
+        boolean oddLength = this.length % 2 != 0;
+
+        int middle = this.length / 2;
+
 
         LinkedList<T> leftSide = new LinkedList<>();
-
-
-        Node<T> slow = this.head;
         Node<T> fast = this.head;
-        while (fast != null && fast.next() != null){
-            leftSide.add(slow.val(), 0);
-            slow = slow.next();
-            fast = fast.next().next();
+        int currIndex = 0;
+
+        while (currIndex < middle){
+            leftSide.add(0, fast.val());
+            fast = fast.next();
+            currIndex++;
         }
 
 
-        if (fast != null){
-            slow = slow.next();
+        if (oddLength){
+            fast = fast.next();
         }
 
 
         Node<T> current = leftSide.head;
-        while (slow != null && current != null){
-            if (!slow.val().equals(current.val())){
+        while (fast != null){
+            if (!fast.val().equals(current.val())){
                 return false;
             }
             current = current.next();
-            slow = slow.next();
+            fast = fast.next();
         }
-        return slow == null && current == null;
+
+        return true;
     }
 
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
         list.append(2);
         list.append(1);
-        list.append(2);
+        list.append(3);
 
         
         System.out.println(list.isPalindrome());
