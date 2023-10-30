@@ -333,6 +333,57 @@ public class LinkedList<T>{
         return true;
     }
 
+    public LinkedList<T> subList(int startIndex, int endIndex){
+        if (startIndex < 0 || endIndex >= length){
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
+
+        if (startIndex > endIndex){
+            throw new IndexOutOfBoundsException("The Start index cant be greater than the End index");
+        }
+
+        if (startIndex == endIndex){
+            return new LinkedList<>();
+        }
+
+        int index = 0;
+
+
+        LinkedList<T> newLinkedList = new LinkedList<T>(); 
+
+        Node<T> current = this.head;
+
+        while (index < startIndex){
+            current = current.next();
+            index++;
+        }
+
+        while (index < endIndex){
+            newLinkedList.append(current.val());
+            current = current.next();
+            index++;
+        }
+
+        return newLinkedList;
+    }
+
+    public double sum(){
+        Node<T> current = this.head;
+
+        if (!(current.val() instanceof Number)){
+            throw new UnsupportedOperationException("The sum() method is only compatible with linked lists with numeric values!");
+        }
+
+        double sum = 0;
+
+        while (current != null){
+            sum += ((Number) current.val()).doubleValue();
+            current = current.next();
+        }
+
+        return sum;
+    }
+
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
         list.append(2);
@@ -341,6 +392,14 @@ public class LinkedList<T>{
 
         
         list.addFirst(5);
+        list.append(8);
+        list.append(78);
+        list.append(1);
+
+        System.out.println(list.toString());
+        System.out.println(list.sum());
+        System.out.println(list.subList(2, 4).toString());
+
 
         
         
