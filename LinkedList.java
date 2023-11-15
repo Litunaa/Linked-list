@@ -448,21 +448,34 @@ public class LinkedList<T>{
         }
 
         Node<T> current = this.head;
-
         new_LinkedList.head = current;
+        Node<T> newCurrent = new_LinkedList.head;
 
-        while (current.next() != null){
-            new_LinkedList.append(current);
+
+
+        while (current != null){
+            current = current.next();
+            newCurrent.setNext(current);
+            newCurrent = newCurrent.next();
         }
+
+        return new_LinkedList;
     }
 
     public static void main(String[] args){
-        LinkedList<Integer> list = new LinkedList<Integer>();
+        LinkedList<Integer> list = new LinkedList<>();
         list.append(2);
 
-        list.removeFirst();
         list.append(7);
+        list.append(5);
+        list.append(9);
+        list.append(1);
+
         System.out.println(list.toString());
+
+        LinkedList<Integer> newList = list.clone();
+
+        System.out.println(newList.toString());
 
 
 
