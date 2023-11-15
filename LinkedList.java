@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class LinkedList<T>{
 
     private Node<T> head;
@@ -134,6 +136,32 @@ public class LinkedList<T>{
         length--;
     }
 
+    public void removeLast(){
+        if (this.head.next() == null){
+            this.head = null;
+            this.length = 0;
+            return;
+        }
+        int index = 0;
+
+        Node<T> current = this.head;
+        Node<T> newLast = null;
+
+        while (index < this.length-2){
+            current = current.next();
+            index++;
+        }
+        current.setNext(newLast);
+        this.length--;
+    }
+
+    public void removeFirst(){
+        if (this.head == null){
+            return;
+        }
+        this.head = this.head.next();
+    }
+
     public void pop(){
 
         if (this.head == null){
@@ -184,11 +212,14 @@ public class LinkedList<T>{
         prev.setNext(newNode);
         newNode.setNext(current);
         }
-        length++;
+        this.length++;
     }
 
     public void addFirst(T data){
         add(0, data);
+    }
+    public void addLast(T data){
+        add(this.length, data);
     }
 
 
@@ -384,21 +415,55 @@ public class LinkedList<T>{
         return sum;
     }
 
+    public void removeDuplicates(){
+        if (this.head == null){
+            return;
+        }
+
+        HashMap<Object, Boolean> elements = new HashMap<>();
+
+        Node<T> current = this.head;
+        Node<T> prev = null;
+
+
+        while (current != null){
+            if (elements.containsKey(current.val())){
+                current = current.next();
+                prev.setNext(current);
+            }
+            
+            else{
+                elements.put(current.val(), true);
+                prev = current;
+                current = current.next();
+            }
+           
+        }
+    }
+
+    public LinkedList<T> clone(){
+        LinkedList<T> new_LinkedList = new LinkedList<>();
+        if (this.head == null){
+            return new_LinkedList;
+        }
+
+        Node<T> current = this.head;
+
+        new_LinkedList.head = current;
+
+        while (current.next() != null){
+            new_LinkedList.append(current);
+        }
+    }
+
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<Integer>();
         list.append(2);
-        list.append(1);
-        list.append(2);
 
-        
-        list.addFirst(5);
-        list.append(8);
-        list.append(78);
-        list.append(1);
-
+        list.removeFirst();
+        list.append(7);
         System.out.println(list.toString());
-        System.out.println(list.sum());
-        System.out.println(list.subList(2, 4).toString());
+
 
 
         
