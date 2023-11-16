@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class LinkedList<T>{
 
@@ -62,7 +62,7 @@ public class LinkedList<T>{
     }
 
     public T getValueAt(int index){     // Returns value at specified index
-        if (index >= length || index < 0){
+        if (index >= this.length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -70,7 +70,7 @@ public class LinkedList<T>{
 
         int currIndex = 0;
 
-        while (currIndex <= index){
+        while (currIndex < index){
             current = current.next();
         }
         return current.val();
@@ -88,7 +88,7 @@ public class LinkedList<T>{
             current = current.next();
             currIndex++;
         }
-        return -1;
+        return -1; // Incase item doesn't exist
     }
 
     public String IndexOfAll(T data){  // Returns index of all occurences of an item
@@ -122,18 +122,19 @@ public class LinkedList<T>{
 
     public void remove(T val){   // Removes item
         Node<T> current = this.head;
-        Node<T> prev = null;
+        Node<T> prev = new Node<T>(null, null);
         while (current != null){
             if (current.val() == val){
                 current = current.next();
                 prev.setNext(current);
+                this.length--;
+                return;
             }
             else{
                 prev = current;
                 current = current.next();
             }
         }
-        length--;
     }
 
     public void removeLast(){
@@ -160,6 +161,7 @@ public class LinkedList<T>{
             return;
         }
         this.head = this.head.next();
+        this.length--;
     }
 
     public void pop(){
@@ -187,7 +189,7 @@ public class LinkedList<T>{
     }
 
     public void add(int index, T data){     // Adds item at specified index
-        if (index > length || index < 0){
+        if (index > this.length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -236,7 +238,7 @@ public class LinkedList<T>{
     }
 
     public void reverse(){ // Reverses linked list
-        if (length <= 1){
+        if (this.length <= 1){
             return;
         }
 
@@ -313,12 +315,14 @@ public class LinkedList<T>{
             current = current.next();
             currIndex++;
         }
-
+                                
         while (current != null){
             rightList.append(current.val());
             current = current.next();
         }
 
+        leftList.length = index;
+        rightList.length = this.length - index;
 
         splittedLists[0] = leftList;
         splittedLists[1] = rightList;
@@ -365,7 +369,7 @@ public class LinkedList<T>{
     }
 
     public LinkedList<T> subList(int startIndex, int endIndex){
-        if (startIndex < 0 || endIndex >= length){
+        if (startIndex < 0 || endIndex >= this.length){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -420,20 +424,21 @@ public class LinkedList<T>{
             return;
         }
 
-        HashMap<Object, Boolean> elements = new HashMap<>();
+        ArrayList<Object> elements = new ArrayList<Object>();
 
         Node<T> current = this.head;
         Node<T> prev = null;
 
 
         while (current != null){
-            if (elements.containsKey(current.val())){
+            if (elements.contains(current.val())){
                 current = current.next();
                 prev.setNext(current);
+                this.length--;
             }
             
             else{
-                elements.put(current.val(), true);
+                elements.add(current.val());
                 prev = current;
                 current = current.next();
             }
@@ -464,23 +469,15 @@ public class LinkedList<T>{
 
     public static void main(String[] args){
         LinkedList<Integer> list = new LinkedList<>();
-        list.append(2);
-
+        list.append(5);
+        list.append(5);
+        list.append(5);
+        list.append(7);
         list.append(7);
         list.append(5);
-        list.append(9);
-        list.append(1);
 
+        list.removeDuplicates();
         System.out.println(list.toString());
 
-        LinkedList<Integer> newList = list.clone();
-
-        System.out.println(newList.toString());
-
-
-
-        
-        
-        
     }
 }
