@@ -512,8 +512,6 @@ public class LinkedList<T>{
             currIndex++;
         }
         current.setNext(current.next().next());
-
-
     }
 
 
