@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class LinkedList<T>{
 
     private Node<T> head;
@@ -60,7 +63,7 @@ public class LinkedList<T>{
     }
 
     public T getValueAt(int index){     // Returns value at specified index
-        if (index >= length || index < 0){
+        if (index >= this.length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -68,7 +71,7 @@ public class LinkedList<T>{
 
         int currIndex = 0;
 
-        while (currIndex <= index){
+        while (currIndex < index){
             current = current.next();
         }
         return current.val();
@@ -86,7 +89,7 @@ public class LinkedList<T>{
             current = current.next();
             currIndex++;
         }
-        return -1;
+        return -1; // Incase item doesn't exist
     }
 
     public String IndexOfAll(T data){  // Returns index of all occurences of an item
@@ -120,18 +123,46 @@ public class LinkedList<T>{
 
     public void remove(T val){   // Removes item
         Node<T> current = this.head;
-        Node<T> prev = null;
+        Node<T> prev = new Node<T>(null, null);
         while (current != null){
             if (current.val() == val){
                 current = current.next();
                 prev.setNext(current);
+                this.length--;
+                return;
             }
             else{
                 prev = current;
                 current = current.next();
             }
         }
-        length--;
+    }
+
+    public void removeLast(){
+        if (this.head.next() == null){
+            this.head = null;
+            this.length = 0;
+            return;
+        }
+        int index = 0;
+
+        Node<T> current = this.head;
+        Node<T> newLast = null;
+
+        while (index < this.length-2){
+            current = current.next();
+            index++;
+        }
+        current.setNext(newLast);
+        this.length--;
+    }
+
+    public void removeFirst(){
+        if (this.head == null){
+            return;
+        }
+        this.head = this.head.next();
+        this.length--;
     }
 
     public void pop(){
@@ -159,7 +190,7 @@ public class LinkedList<T>{
     }
 
     public void add(int index, T data){     // Adds item at specified index
-        if (index > length || index < 0){
+        if (index > this.length || index < 0){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -184,11 +215,14 @@ public class LinkedList<T>{
         prev.setNext(newNode);
         newNode.setNext(current);
         }
-        length++;
+        this.length++;
     }
 
     public void addFirst(T data){
         add(0, data);
+    }
+    public void addLast(T data){
+        add(this.length, data);
     }
 
 
@@ -205,7 +239,7 @@ public class LinkedList<T>{
     }
 
     public void reverse(){ // Reverses linked list
-        if (length <= 1){
+        if (this.length <= 1){
             return;
         }
 
@@ -282,12 +316,14 @@ public class LinkedList<T>{
             current = current.next();
             currIndex++;
         }
-
+                                
         while (current != null){
             rightList.append(current.val());
             current = current.next();
         }
 
+        leftList.length = index;
+        rightList.length = this.length - index;
 
         splittedLists[0] = leftList;
         splittedLists[1] = rightList;
@@ -334,7 +370,7 @@ public class LinkedList<T>{
     }
 
     public LinkedList<T> subList(int startIndex, int endIndex){
-        if (startIndex < 0 || endIndex >= length){
+        if (startIndex < 0 || endIndex >= this.length){
             throw new IndexOutOfBoundsException("Index out of bounds!");
         }
 
@@ -384,25 +420,115 @@ public class LinkedList<T>{
         return sum;
     }
 
+    public void removeDuplicates(){
+        if (this.head == null){
+            return;
+        }
+
+        ArrayList<Object> elements = new ArrayList<Object>();
+
+        Node<T> current = this.head;
+        Node<T> prev = null;
+
+
+        while (current != null){
+            if (elements.contains(current.val())){
+                current = current.next();
+                prev.setNext(current);
+                this.length--;
+            }
+            
+            else{
+                elements.add(current.val());
+                prev = current;
+                current = current.next();
+            }
+           
+        }
+    }
+
+    public LinkedList<T> clone(){
+        LinkedList<T> new_LinkedList = new LinkedList<>();
+        if (this.head == null){
+            return new_LinkedList;
+        }
+
+        Node<T> current = this.head;
+        new_LinkedList.head = current;
+        Node<T> newCurrent = new_LinkedList.head;
+
+
+
+        while (current != null){
+            current = current.next();
+            newCurrent.setNext(current);
+            newCurrent = newCurrent.next();
+        }
+
+        return new_LinkedList;
+    }
+
+
+    public Object[] toArray(){
+        Object[] array = new Object[this.length];
+
+        Node<T> current = this.head;
+        int index = 0; 
+
+        while (current != null){
+            array[index] = current.val();
+            current = current.next();
+            index++;
+        }
+        return array;
+    }
+
+    public void set(int index, T element){
+        if (index < 0 || index >= this.length){
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
+
+        Node<T> current = this.head;
+        int currIndex = 0;
+
+
+        while (currIndex < index){
+            current = current.next();
+            currIndex++;
+        }
+        current.setVal(element);
+    }
+
+    public void remove(int index){
+        if (index < 0 || index >= this.length){
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
+
+        Node<T> current = this.head;
+        int currIndex = 0;
+
+        while (currIndex < index - 1){
+            current = current.next();
+            currIndex++;
+        }
+        current.setNext(current.next().next());
+
+
+    }
+
+    
+
     public static void main(String[] args){
-        LinkedList<Integer> list = new LinkedList<Integer>();
-        list.append(2);
-        list.append(1);
-        list.append(2);
-
-        
-        list.addFirst(5);
-        list.append(8);
-        list.append(78);
-        list.append(1);
-
+        LinkedList<Integer> list = new LinkedList<>();
+        list.append(5);
+        list.append(5);
+        list.append(5);
         System.out.println(list.toString());
-        System.out.println(list.sum());
-        System.out.println(list.subList(2, 4).toString());
 
+        list.set(2, 8);
+        System.out.println(list.toString());
+        list.remove(1);
+        System.out.println(list.toString());
 
-        
-        
-        
     }
 }
